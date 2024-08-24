@@ -2,7 +2,7 @@ import React from "react";
 import { View, TextInput, Button, Text, StyleSheet } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { useSession } from "@/ctx";
+import { useSession } from "@/context/ctx";
 import { router } from "expo-router";
 
 interface LoginValues {

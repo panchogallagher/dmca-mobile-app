@@ -1,4 +1,4 @@
-import { SessionProvider } from "@/ctx";
+import { SessionProvider } from "@/context/ctx";
 import { Slot } from "expo-router";
 import "@/i18n"; // Importa la configuración de i18n
 

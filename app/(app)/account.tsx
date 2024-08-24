@@ -1,4 +1,4 @@
-import { useSession } from "@/ctx";
+import { useSession } from "@/context/ctx";
 import { Button, Text, View } from "react-native";
 
 export default function Account() {

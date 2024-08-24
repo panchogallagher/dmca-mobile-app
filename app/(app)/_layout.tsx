@@ -1,7 +1,7 @@
 import { Text } from "react-native";
 import { Redirect, Stack, Tabs } from "expo-router";
 
-import { useSession } from "../../ctx";
+import { useSession } from "@/context/ctx";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
