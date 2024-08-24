@@ -10,7 +10,7 @@ const generateDummyItems = (count: number): Device[] => {
 
 export const fetchDevices = async (): Promise<Device[]> => {
   return new Promise((resolve) => {
-    const dummyItems = generateDummyItems(20); // Genera 10 items dummy
+    const dummyItems = generateDummyItems(5); // Genera 10 items dummy
     setTimeout(() => {
       resolve(dummyItems);
     }, 2000); // Simula un retraso de 2 segundos
