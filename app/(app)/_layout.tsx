@@ -1,5 +1,5 @@
 import { Text } from "react-native";
-import { Redirect, Stack, Tabs } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 
 import { useSession } from "@/context/ctx";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";

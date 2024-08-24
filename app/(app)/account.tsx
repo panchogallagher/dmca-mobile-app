@@ -1,16 +1,11 @@
+import { Theme } from "@/constants/Theme";
 import { useSession } from "@/context/ctx";
 import { Button, Text, View } from "react-native";
 
 export default function Account() {
   const { signOut } = useSession();
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <View style={Theme.container}>
       <Text>Account</Text>
       <Button
         title="Sign Out"
