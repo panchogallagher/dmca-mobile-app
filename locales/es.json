@@ -1,0 +1,9 @@
+{
+  "welcome": "Bienvenido",
+  "login": "Iniciar sesión",
+  "email": "Correo electrónico",
+  "password": "Contraseña",
+  "devices": {
+    "title": "Mis dispositivos"
+  }
+}
