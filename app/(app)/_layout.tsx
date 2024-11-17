@@ -5,6 +5,10 @@ import { useSession } from "@/context/ctx";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
+const Tab = createBottomTabNavigator();
 
 export default function AppLayout() {
   const { session, isLoading } = useSession();
@@ -24,6 +28,59 @@ export default function AppLayout() {
   }
 
   return (
+    /*
+    <Tab.Navigator>
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: "Inicio",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "home" : "home-outline"}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="devices"
+        options={{
+          title: "Dispositivos",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "radio" : "radio-outline"}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="account"
+        options={{
+          title: "Perfil",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "person" : "person-outline"}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="notifications"
+        options={{
+          title: "Notificaciones",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "notifications" : "notifications-outline"}
+              color={color}
+            />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+    */
+
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
