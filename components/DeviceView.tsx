@@ -45,9 +45,9 @@ export function DeviceView({ item }: { item: Device }) {
 
   return (
     <>
-      <Text style={styles2.modalDetail}>Última lectura: {item.unit}</Text>
       <Text style={styles2.modalDate}>Última actualización: {item.date}</Text>
       <View style={styles2.chartContainer}>
+        <Text style={styles2.title}>{item.unit}</Text>
         <Text style={styles2.chartTitle}>Datos Recientes</Text>
         <LineChart
           data={{
@@ -89,23 +89,34 @@ export function DeviceView({ item }: { item: Device }) {
             borderRadius: 16,
           }}
         />
+        <Text style={styles2.activityTitle}>Registro de Actividad</Text>
+        {loadingActivity ? (
+          <ActivityIndicator size="large" color={Colors.light.icon} />
+        ) : (
+          <FlatList
+            data={activity}
+            renderItem={renderActivityItem}
+            keyExtractor={(item) => item.id}
+          />
+        )}
       </View>
-
-      <Text style={styles2.activityTitle}>Registro de Actividad</Text>
-      {loadingActivity ? (
-        <ActivityIndicator size="large" color={Colors.light.icon} />
-      ) : (
-        <FlatList
-          data={activity}
-          renderItem={renderActivityItem}
-          keyExtractor={(item) => item.id}
-        />
-      )}
     </>
   );
 }
 
 const styles2 = StyleSheet.create({
+  titleContainer: {
+    flex: 1, // El contenedor ocupa todo el espacio disponible
+    alignItems: "center", // Centra horizontalmente
+    marginBottom: 40,
+    marginTop: 10,
+    padding: 0,
+  },
+  title: {
+    fontSize: 46,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
   modalDetail: {
     fontSize: 18,
     color: "#555",
@@ -117,10 +128,11 @@ const styles2 = StyleSheet.create({
     marginBottom: 16,
   },
   activityTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     color: "#333",
-    marginVertical: 16,
+    marginTop: 30,
+    marginBottom: 10,
   },
   activityItem: {
     flexDirection: "row",

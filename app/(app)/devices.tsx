@@ -5,6 +5,7 @@ import {
   FlatList,
   Modal,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -17,6 +18,7 @@ import { Colors } from "@/constants/Colors";
 import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { DeviceView } from "@/components/DeviceView";
+import Toast from "react-native-toast-message";
 
 export default function Index() {
   const { t } = useTranslation();
@@ -41,7 +43,6 @@ export default function Index() {
       setDevices(data);
       setLoading(false);
     };
-
     loadItems();
   }, []);
 
@@ -97,6 +98,7 @@ export default function Index() {
                 <MaterialIcons name="close" size={24} color="#333" />
               </Pressable>
             </View>
+
             <View style={styles2.modalBody}>
               {selectedDevice && (
                 <DeviceView item={selectedDevice}></DeviceView>
@@ -182,7 +184,6 @@ const styles2 = StyleSheet.create({
   },
   modalTitle: {
     fontSize: 20,
-    fontWeight: "bold",
     color: "#333",
   },
 });

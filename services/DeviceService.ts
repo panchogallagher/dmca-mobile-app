@@ -99,7 +99,7 @@ export const fetchDevices = async (): Promise<Device[]> => {
 
 export const fetchDeviceActivity = async (): Promise<Activity[]> => {
   return new Promise((resolve) => {
-    const dummyItems = generateDummyActivity(1 + getRandomInt(10)); // Genera 10 items dummy
+    const dummyItems = generateDummyActivity(1 + getRandomInt(3)); // Genera 10 items dummy
     setTimeout(() => {
       resolve(dummyItems);
     }, (1 + getRandomInt(3)) * 1000); // Simula un retraso de 2 segundos
