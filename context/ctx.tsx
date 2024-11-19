@@ -1,3 +1,4 @@
+import moment from "moment";
 import { useContext, createContext, type PropsWithChildren } from "react";
 import { useStorageState } from "../hooks/useStorageState";
 
@@ -33,7 +34,22 @@ export function SessionProvider({ children }: PropsWithChildren) {
       value={{
         signIn: () => {
           // Perform sign-in logic here
-          setSession("xxx");
+          const randomTimestamp = Math.floor(
+            Date.now() - 20 * 24 * 60 * 60 * 1000 // 30 minutos en milisegundos
+          );
+
+          // Convertir el timestamp a un formato específico
+          const randomDate = moment(randomTimestamp).format(
+            "YYYY-MM-DD HH:mm:ss"
+          );
+
+          setSession(
+            JSON.stringify({
+              name: "John Doe",
+              email: "johndoe@gmail.com",
+              create_date: randomDate,
+            })
+          );
         },
         signOut: () => {
           setSession(null);

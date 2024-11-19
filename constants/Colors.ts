@@ -24,3 +24,9 @@ export const Colors = {
     tabIconSelected: tintColorDark,
   },
 };
+
+export const Gradient: readonly [string, string, ...string[]] = [
+  "#F2F7FB",
+  "#F4F9FD",
+  "#effaef",
+];

@@ -79,6 +79,24 @@ const generateActivity = (i: number): Activity => {
   };
 };
 
+const generateDummyChart = () => {
+  return {
+    labels: ["January", "February", "March", "April", "May", "June"],
+    datasets: [
+      {
+        data: [
+          Math.random() * 100,
+          Math.random() * 100,
+          Math.random() * 100,
+          Math.random() * 100,
+          Math.random() * 100,
+          Math.random() * 100,
+        ],
+      },
+    ],
+  };
+};
+
 // Función para generar un listado dummy de items
 const generateDummyItems = (count: number): Device[] => {
   return Array.from({ length: count }, (_, i) => generateDevice(i));
@@ -90,7 +108,7 @@ const generateDummyActivity = (count: number): Activity[] => {
 
 export const fetchDevices = async (): Promise<Device[]> => {
   return new Promise((resolve) => {
-    const dummyItems = generateDummyItems(5); // Genera 10 items dummy
+    const dummyItems = generateDummyItems(2 + getRandomInt(3)); // Genera 10 items dummy
     setTimeout(() => {
       resolve(dummyItems);
     }, 3000); // Simula un retraso de 2 segundos
@@ -99,9 +117,18 @@ export const fetchDevices = async (): Promise<Device[]> => {
 
 export const fetchDeviceActivity = async (): Promise<Activity[]> => {
   return new Promise((resolve) => {
-    const dummyItems = generateDummyActivity(1 + getRandomInt(3)); // Genera 10 items dummy
+    const dummyItems = generateDummyActivity(1 + getRandomInt(3)); // Genera 4 items dummy
     setTimeout(() => {
       resolve(dummyItems);
+    }, (1 + getRandomInt(3)) * 1000); // Simula un retraso de 2 segundos
+  });
+};
+
+export const fetchDeviceChart = async () => {
+  return new Promise((resolve) => {
+    const dummyChart = generateDummyChart();
+    setTimeout(() => {
+      resolve(dummyChart);
     }, (1 + getRandomInt(3)) * 1000); // Simula un retraso de 2 segundos
   });
 };

@@ -14,6 +14,7 @@ export default function AppLayout() {
 
   useEffect(() => {
     if (session) {
+      /*
       // Configura un intervalo para mostrar notificaciones si hay sesión
       const notificationInterval = setInterval(() => {
         Toast.show({
@@ -26,6 +27,7 @@ export default function AppLayout() {
 
       // Limpieza del intervalo al desmontar
       return () => clearInterval(notificationInterval);
+      */
     }
   }, [session]); // Solo se ejecuta cuando cambia `isAuthenticated`
 
@@ -62,12 +64,12 @@ export default function AppLayout() {
         }}
       />
       <Tabs.Screen
-        name="devices"
+        name="notifications"
         options={{
-          title: "Dispositivos",
+          title: "Notificaciones",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
-              name={focused ? "radio" : "radio-outline"}
+              name={focused ? "notifications" : "notifications-outline"}
               color={color}
             />
           ),
@@ -80,18 +82,6 @@ export default function AppLayout() {
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? "person" : "person-outline"}
-              color={color}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="notifications"
-        options={{
-          title: "Notificaciones",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "notifications" : "notifications-outline"}
               color={color}
             />
           ),

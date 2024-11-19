@@ -1,5 +1,5 @@
 import { Colors } from "@/constants/Colors";
-import { fetchDeviceActivity } from "@/services";
+import { fetchDeviceActivity, fetchDeviceChart } from "@/services";
 import { Activity, Device } from "@/types";
 import { useEffect, useState } from "react";
 import {
@@ -22,11 +22,23 @@ export function DeviceView({ item }: { item: Device }) {
   const [activity, setActivity] = useState<Activity[]>([]);
   const [loadingActivity, setLoadingActivity] = useState<boolean>(true);
 
+  const [chart, setChart] = useState<any>();
+  const [loadingChart, setLoadingChart] = useState<boolean>(true);
+
   useEffect(() => {
     const loadItems = async () => {
       const data = await fetchDeviceActivity();
       setActivity(data);
       setLoadingActivity(false);
+    };
+    loadItems();
+  }, []);
+
+  useEffect(() => {
+    const loadItems = async () => {
+      const data = await fetchDeviceChart();
+      setChart(data);
+      setLoadingChart(false);
     };
     loadItems();
   }, []);
@@ -48,50 +60,42 @@ export function DeviceView({ item }: { item: Device }) {
       <Text style={styles2.modalDate}>Última actualización: {item.date}</Text>
       <View style={styles2.chartContainer}>
         <Text style={styles2.title}>{item.unit}</Text>
-        <Text style={styles2.chartTitle}>Datos Recientes</Text>
-        <LineChart
-          data={{
-            labels: ["January", "February", "March", "April", "May", "June"],
-            datasets: [
-              {
-                data: [
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                ],
-              },
-            ],
-          }}
-          width={Dimensions.get("window").width - 40} // from react-native
-          height={220}
-          chartConfig={{
-            backgroundColor: "#333",
-            backgroundGradientFrom: "#333",
-            backgroundGradientTo: "#999",
-            decimalPlaces: 2, // optional, defaults to 2dp
-            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-            style: {
-              borderRadius: 16,
-            },
-            propsForDots: {
-              r: "6",
-              strokeWidth: "2",
-              stroke: "#4CAF50",
-            },
-          }}
-          bezier
-          style={{
-            marginVertical: 8,
-            borderRadius: 16,
-          }}
-        />
+        {loadingChart ? (
+          <ActivityIndicator color={Colors.light.icon} />
+        ) : (
+          <>
+            <Text style={styles2.chartTitle}>Datos Recientes</Text>
+            <LineChart
+              data={chart}
+              width={Dimensions.get("window").width - 40} // from react-native
+              height={220}
+              chartConfig={{
+                backgroundColor: "#333",
+                backgroundGradientFrom: "#333",
+                backgroundGradientTo: "#999",
+                decimalPlaces: 2, // optional, defaults to 2dp
+                color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                style: {
+                  borderRadius: 16,
+                },
+                propsForDots: {
+                  r: "6",
+                  strokeWidth: "2",
+                  stroke: "#4CAF50",
+                },
+              }}
+              bezier
+              style={{
+                marginVertical: 8,
+                borderRadius: 16,
+              }}
+            />
+          </>
+        )}
         <Text style={styles2.activityTitle}>Registro de Actividad</Text>
         {loadingActivity ? (
-          <ActivityIndicator size="large" color={Colors.light.icon} />
+          <ActivityIndicator color={Colors.light.icon} />
         ) : (
           <FlatList
             data={activity}

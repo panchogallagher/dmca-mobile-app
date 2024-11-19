@@ -4,7 +4,7 @@ export const Theme = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
-    backgroundColor: "#eaeaea",
+    //backgroundColor: "#eaeaea",
     /*
     justifyContent: "center",
     alignItems: "center",
@@ -21,5 +21,8 @@ export const Theme = StyleSheet.create({
     textAlign: "center",
     fontSize: 30,
     fontWeight: "bold",
+  },
+  gradient: {
+    flex: 1,
   },
 });
