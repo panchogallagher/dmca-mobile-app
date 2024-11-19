@@ -87,6 +87,9 @@ export default function Index() {
             keyExtractor={(item) => item.id}
           />
         )}
+        <TouchableOpacity style={styles2.fab}>
+          <MaterialIcons name="add" size={24} color="#fff" />
+        </TouchableOpacity>
         <Modal visible={modalVisible} animationType="slide" transparent={false}>
           <View style={styles2.modalOverlay}>
             <View style={styles2.modalContent}>
@@ -200,5 +203,21 @@ const styles2 = StyleSheet.create({
   modalTitle: {
     fontSize: 20,
     color: "#333",
+  },
+  fab: {
+    position: "absolute",
+    bottom: 0, // Distancia desde el fondo
+    right: 20, // Distancia desde el borde derecho
+    backgroundColor: "#4CAF50",
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 5, // Sombra en Android
+    shadowColor: "#000", // Sombra en iOS
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3.84,
   },
 });
