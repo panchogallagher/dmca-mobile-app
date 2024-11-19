@@ -207,7 +207,7 @@ const styles2 = StyleSheet.create({
   fab: {
     position: "absolute",
     bottom: 0, // Distancia desde el fondo
-    right: 20, // Distancia desde el borde derecho
+    right: 0, // Distancia desde el borde derecho
     backgroundColor: "#4CAF50",
     width: 56,
     height: 56,
