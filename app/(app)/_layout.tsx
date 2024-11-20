@@ -14,7 +14,7 @@ export default function AppLayout() {
 
   useEffect(() => {
     if (session) {
-      /*
+      /*      
       // Configura un intervalo para mostrar notificaciones si hay sesión
       const notificationInterval = setInterval(() => {
         Toast.show({
@@ -24,10 +24,18 @@ export default function AppLayout() {
           visibilityTime: 2000, // Duración en pantalla (ms)
         });
       }, 30000); // Cada 30 segundos
+*/
 
+      const notificationInterval = setTimeout(() => {
+        Toast.show({
+          type: "success",
+          text1: "Le recomendamos regar 💦",
+          position: "top",
+          visibilityTime: 2000, // Duración en pantalla (ms)
+        });
+      }, 6000);
       // Limpieza del intervalo al desmontar
       return () => clearInterval(notificationInterval);
-      */
     }
   }, [session]); // Solo se ejecuta cuando cambia `isAuthenticated`
 

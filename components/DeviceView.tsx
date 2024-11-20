@@ -11,6 +11,7 @@ import {
   View,
 } from "react-native";
 import { LineChart } from "react-native-chart-kit";
+import Toast from "react-native-toast-message";
 
 const activityLog = [
   { id: "1", activity: "Mantenimiento realizado", date: "2024-11-10" },
@@ -36,7 +37,7 @@ export function DeviceView({ item }: { item: Device }) {
 
   useEffect(() => {
     const loadItems = async () => {
-      const data = await fetchDeviceChart();
+      const data = await fetchDeviceChart(item);
       setChart(data);
       setLoadingChart(false);
     };
@@ -61,19 +62,22 @@ export function DeviceView({ item }: { item: Device }) {
       <View style={styles2.chartContainer}>
         <Text style={styles2.title}>{item.unit}</Text>
         {loadingChart ? (
-          <ActivityIndicator color={Colors.light.icon} />
+          <View style={{ width: Dimensions.get("window").width - 40 }}>
+            <ActivityIndicator color={Colors.light.icon} />
+          </View>
         ) : (
           <>
             <Text style={styles2.chartTitle}>Datos Recientes</Text>
             <LineChart
-              data={chart}
+              data={chart.data}
               width={Dimensions.get("window").width - 40} // from react-native
-              height={220}
+              height={250}
+              yAxisSuffix={chart.unit}
               chartConfig={{
                 backgroundColor: "#333",
                 backgroundGradientFrom: "#333",
                 backgroundGradientTo: "#999",
-                decimalPlaces: 2, // optional, defaults to 2dp
+                decimalPlaces: 0,
                 color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                 labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                 style: {
@@ -83,6 +87,9 @@ export function DeviceView({ item }: { item: Device }) {
                   r: "6",
                   strokeWidth: "2",
                   stroke: "#4CAF50",
+                },
+                propsForLabels: {
+                  rotation: 305,
                 },
               }}
               bezier

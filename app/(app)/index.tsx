@@ -25,7 +25,8 @@ export default function Index() {
   const { t } = useTranslation();
   const [devices, setDevices] = useState<Device[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [addModalVisible, setAddModalVisible] = useState<boolean>(false);
   const [selectedDevice, setSelectedDevice] = useState<any>(null);
 
   const openModal = (device: any) => {
@@ -36,6 +37,14 @@ export default function Index() {
   const closeModal = () => {
     setModalVisible(false);
     setSelectedDevice(null);
+  };
+
+  const openAddModal = () => {
+    setAddModalVisible(true);
+  };
+
+  const closeAddModal = () => {
+    setAddModalVisible(false);
   };
 
   useEffect(() => {
@@ -80,16 +89,23 @@ export default function Index() {
         {loading ? (
           <ActivityIndicator color={Colors.light.icon} />
         ) : (
-          <FlatList
-            style={styles2.list}
-            data={devices}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-          />
+          <>
+            <FlatList
+              style={styles2.list}
+              data={devices}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
+            />
+            <View style={styles2.fabContainer}>
+              <TouchableOpacity
+                style={styles2.fab}
+                onPress={openAddModal as any}
+              >
+                <MaterialIcons name="add" size={24} color="#fff" />
+              </TouchableOpacity>
+            </View>
+          </>
         )}
-        <TouchableOpacity style={styles2.fab}>
-          <MaterialIcons name="add" size={24} color="#fff" />
-        </TouchableOpacity>
         <Modal visible={modalVisible} animationType="slide" transparent={false}>
           <View style={styles2.modalOverlay}>
             <View style={styles2.modalContent}>
@@ -119,10 +135,121 @@ export default function Index() {
             </View>
           </View>
         </Modal>
+        <Modal
+          visible={addModalVisible}
+          transparent={true}
+          animationType="fade"
+          onRequestClose={closeAddModal}
+        >
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContent}>
+              <View style={styles.modalHeader}>
+                <Text style={styles.modalTitle}>Añadir Dispositivo IoT</Text>
+                <TouchableOpacity onPress={closeAddModal}>
+                  <MaterialIcons name="close" size={24} color="#333" />
+                </TouchableOpacity>
+              </View>
+              <ScrollView>
+                <Text style={styles.modalText}>
+                  Para añadir un dispositivo IoT, sigue estos pasos:
+                </Text>
+                <Text style={styles.modalStep}>
+                  1. Asegúrate de que el dispositivo esté conectado a la red
+                  Wi-Fi.
+                </Text>
+                <Text style={styles.modalStep}>
+                  2. Abre la aplicación móvil y selecciona "Añadir Dispositivo".
+                </Text>
+                <Text style={styles.modalStep}>
+                  3. Introduce el código de emparejamiento del dispositivo.
+                </Text>
+                <Text style={styles.modalStep}>
+                  4. Configura los parámetros básicos, como el nombre del
+                  dispositivo y su ubicación.
+                </Text>
+                <Text style={styles.modalStep}>
+                  5. Guarda los cambios para finalizar la configuración.
+                </Text>
+                <Text style={styles.modalText}>
+                  Una vez añadido, podrás gestionar y monitorear tu dispositivo
+                  desde la aplicación.
+                </Text>
+              </ScrollView>
+            </View>
+          </View>
+        </Modal>
       </View>
     </LinearGradient>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f5f5f5",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text: {
+    fontSize: 18,
+    color: "#333",
+  },
+  fab: {
+    position: "absolute",
+    bottom: 20, // Distancia desde el fondo
+    right: 20, // Distancia desde el borde derecho
+    backgroundColor: "#4CAF50",
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 5, // Sombra en Android
+    shadowColor: "#000", // Sombra en iOS
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3.84,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Fondo semitransparente
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContent: {
+    width: "90%",
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    padding: 20,
+    elevation: 5, // Para Android
+    shadowColor: "#000", // Para iOS
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3.84,
+  },
+  modalHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#333",
+  },
+  modalText: {
+    fontSize: 16,
+    color: "#555",
+    marginBottom: 10,
+  },
+  modalStep: {
+    fontSize: 16,
+    color: "#777",
+    marginBottom: 8,
+    paddingLeft: 10,
+  },
+});
 
 const styles2 = StyleSheet.create({
   title: {
@@ -205,9 +332,9 @@ const styles2 = StyleSheet.create({
     color: "#333",
   },
   fab: {
-    position: "absolute",
-    bottom: 0, // Distancia desde el fondo
-    right: 0, // Distancia desde el borde derecho
+    //position: "absolute",
+    //bottom: 0, // Distancia desde el fondo
+    //right: 0, // Distancia desde el borde derecho
     backgroundColor: "#4CAF50",
     width: 56,
     height: 56,
@@ -219,5 +346,13 @@ const styles2 = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 3.84,
+    zIndex: 100,
+  },
+  fabContainer: {
+    position: "relative", // Relativo al contenedor principal
+    width: "100%",
+    alignItems: "flex-end", // Alinea el FAB a la derecha
+    //padding: 20, // Espacio desde el borde
+    bottom: 0,
   },
 });

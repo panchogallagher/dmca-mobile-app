@@ -6,7 +6,7 @@ moment.locale("es");
 
 const deviceTypes: DeviceType[] = [
   {
-    name: "Sensor de humedad",
+    name: "Higrómetro",
     icon: "water",
     unit: "%",
     min: 30,
@@ -41,7 +41,8 @@ const randomUnit = (obj: DeviceType): string => {
 };
 
 const generateDevice = (i: number): Device => {
-  const index = getRandomInt(deviceTypes.length - 1);
+  //const index = getRandomInt(deviceTypes.length - 1);
+  const index = i % deviceTypes.length;
   const dev: DeviceType = deviceTypes[index];
   const id = (i + 1).toString();
 
@@ -79,21 +80,37 @@ const generateActivity = (i: number): Activity => {
   };
 };
 
-const generateDummyChart = () => {
+const generateDummyChart = (item: Device) => {
+  const hoursArray = [];
+  for (let i = 6; i >= 0; i--) {
+    hoursArray.push(moment().subtract(i, "hours").format("HH:mm"));
+  }
+
+  const deviceType = deviceTypes.find((obj) => obj.name === item.title);
+
+  const dataArray: any[] = [];
+  for (let i = 5; i >= 0; i--) {
+    const random =
+      Math.floor(Math.random() * (deviceType!.max - deviceType!.min + 1)) +
+      deviceType!.min;
+    dataArray.push(+getRandomInt(random));
+  }
+
+  dataArray.push(item.unit.replace(deviceType!.unit, ""));
+
   return {
-    labels: ["January", "February", "March", "April", "May", "June"],
-    datasets: [
-      {
-        data: [
-          Math.random() * 100,
-          Math.random() * 100,
-          Math.random() * 100,
-          Math.random() * 100,
-          Math.random() * 100,
-          Math.random() * 100,
-        ],
-      },
-    ],
+    data: {
+      labels: hoursArray,
+      datasets: [
+        {
+          data: dataArray,
+        },
+      ],
+    },
+    unit:
+      deviceType!.name === "Barómetro"
+        ? " " + deviceType!.unit
+        : deviceType!.unit,
   };
 };
 
@@ -108,7 +125,7 @@ const generateDummyActivity = (count: number): Activity[] => {
 
 export const fetchDevices = async (): Promise<Device[]> => {
   return new Promise((resolve) => {
-    const dummyItems = generateDummyItems(2 + getRandomInt(3)); // Genera 10 items dummy
+    const dummyItems = generateDummyItems(3); // Genera 10 items dummy
     setTimeout(() => {
       resolve(dummyItems);
     }, 3000); // Simula un retraso de 2 segundos
@@ -124,9 +141,9 @@ export const fetchDeviceActivity = async (): Promise<Activity[]> => {
   });
 };
 
-export const fetchDeviceChart = async () => {
+export const fetchDeviceChart = async (item: Device) => {
   return new Promise((resolve) => {
-    const dummyChart = generateDummyChart();
+    const dummyChart = generateDummyChart(item);
     setTimeout(() => {
       resolve(dummyChart);
     }, (1 + getRandomInt(3)) * 1000); // Simula un retraso de 2 segundos

@@ -3,12 +3,14 @@ import { StyleSheet } from "react-native";
 export const Theme = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 24,
+    padding: 16,
     //backgroundColor: "#eaeaea",
     /*
     justifyContent: "center",
     alignItems: "center",
     */
+    //justifyContent: "center",
+    //alignItems: "center",
   },
   title: {
     marginTop: 16,
